@@ -1,5 +1,3 @@
-// Created by r8w9
-
 /*-----------ONLOAD INITIALIZATION-----------*/
 window.onload = function(){
 var c = document.querySelector("canvas");
@@ -240,16 +238,16 @@ function animate(){
   __player.update();
   //update bullets from bullets array
   for (var i=0; i < _bullets.length; i++){
-    _bullets[i].update();
-    if (_bullets[i].y < 0){
+    _bullets[parseInt(i)].update();
+    if (_bullets[parseInt(i)].y < 0){
       _bullets.splice(i, 1);
     }
   }
   //update enemies from enemies array
   for (var k=0; k < _enemies.length; k++){
-    _enemies[k].update();
+    _enemies[parseInt(k)].update();
     //if enemy is below canvas, delete it
-    if(_enemies[k].y > innerHeight){
+    if(_enemies[parseInt(k)].y > innerHeight){
       _enemies.splice(k, 1);
       health -= 10;
     if(health == 0){
@@ -262,7 +260,7 @@ function animate(){
   //loop over both enemies and bullets to detect collisions
   for(var j = _enemies.length-1; j >= 0; j--){
     for(var l = _bullets.length-1; l >= 0; l--){
-      if(collision(_enemies[j], _bullets[l])){
+      if(collision(_enemies[parseInt(j)], _bullets[l])){
         _enemies.splice(j, 1);
         _bullets.splice(l, 1);
         score++;
@@ -272,12 +270,12 @@ function animate(){
   
   //draw healthkits
   for(var h=0; h < _healthkits.length; h++){
-    _healthkits[h].update();
+    _healthkits[parseInt(h)].update();
   }
   //loop over both healthkits and bullets to detect collisions
   for(var hh = _healthkits.length-1; hh >= 0; hh--){
     for(var hhh = _bullets.length-1; hhh >= 0; hhh--){
-      if(collision(_healthkits[hh], _bullets[hhh])){
+      if(collision(_healthkits[parseInt(hh)], _bullets[parseInt(hhh)])){
         _healthkits.splice(hh, 1);
         _bullets.splice(hhh, 1);
         health += 10;
