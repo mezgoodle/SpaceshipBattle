@@ -1,7 +1,7 @@
 /*-----------ONLOAD INITIALIZATION-----------*/
 window.onload = function(){
-var c = document.querySelector("canvas");
-var canvas = document.querySelector("canvas");
+let c = document.querySelector("canvas");
+let canvas = document.querySelector("canvas");
 c.width = innerWidth;
 c.height = innerHeight;
 c = c.getContext("2d");
@@ -26,11 +26,11 @@ mouse.x = event.clientX;
 });
 //eventListener for touch object
 canvas.addEventListener("touchmove", function(event){
-  var rect = canvas.getBoundingClientRect();
-  var root = document.documentElement;
-  var touch = event.changedTouches[0];
-  var touchX = parseInt(touch.clientX);
-  var touchY = parseInt(touch.clientY) - rect.top - root.scrollTop;
+  let rect = canvas.getBoundingClientRect();
+  let root = document.documentElement;
+  let touch = event.changedTouches[0];
+  let touchX = parseInt(touch.clientX);
+  let touchY = parseInt(touch.clientY) - rect.top - root.scrollTop;
   event.preventDefault();
   mouse.x = touchX;
   //mouse.y = touchY;
@@ -38,20 +38,20 @@ canvas.addEventListener("touchmove", function(event){
   
 /*-----------GAME VARIABLES-----------*/  
 //player
-var player_width = 32;
-var player_height = 32;
-var playerImg = new Image();
-var score = 0;
-var health = 100;
+let player_width = 32;
+let player_height = 32;
+let playerImg = new Image();
+let score = 0;
+let health = 100;
 
 function choosePlayer(){
-  var orangeShip = "https://image.ibb.co/n8rayp/rocket.png";
-  var blueShip = "https://image.ibb.co/dfbD1U/heroShip.png";
-  var userInput = prompt("🚀SELECT BATTLESHIP!🚀\n1 is for orange and 2 is for blue ship", 1);   
-  if(userInput==1){
+  let orangeShip = "https://image.ibb.co/n8rayp/rocket.png";
+  let blueShip = "https://image.ibb.co/dfbD1U/heroShip.png";
+  let userInput = prompt("🚀SELECT BATTLESHIP!🚀\n1 is for orange and 2 is for blue ship", 1);   
+  if(userInput === 1){
     playerImg.src = orangeShip;
   }
-  else if(userInput==2){
+  else if(userInput == 2){
     playerImg.src = blueShip;
   }
   else{
@@ -60,24 +60,24 @@ function choosePlayer(){
 }choosePlayer();
 
 //bullet array
-var _bullets = []; //array to hold n bullets
-var bullet_width = 6;
-var bullet_height = 8;
-var bullet_speed = 8;
+let _bullets = []; //array to hold n bullets
+let bullet_width = 6;
+let bullet_height = 8;
+let bullet_speed = 8;
 //enemy array
-var _enemies = []; //array to hold n enemies
-var enemyImg = new Image();
+let _enemies = []; //array to hold n enemies
+let enemyImg = new Image();
 enemyImg.src = "https://image.ibb.co/bX9UuU/ufo_1.png"; //"https://image.ibb.co/gi6ZpU/ufo.png";
-var enemy_width = 32;
-var enemy_height = 32;
+let enemy_width = 32;
+let enemy_height = 32;
 //health array
-var _healthkits = []; //array to hold n health kits
-var healthkitImg = new Image();
+let _healthkits = []; //array to hold n health kits
+let healthkitImg = new Image();
 healthkitImg.src = "https://image.ibb.co/iTrjuU/hospital.png";  //"https://image.ibb.co/gFvSEU/first_aid_kit.png";
-var healthkit_width = 32;
-var healthkit_height = 32;
+let healthkit_width = 32;
+let healthkit_height = 32;
 //sounds
-var shot = new Audio();
+let shot = new Audio();
 shot.src = "https://www.dropbox.com/s/w70c8hyryak6w40/Laser-SoundBible.com-602495617.mp3?dl=0";
 
 /*-----------GAME OBJECTS-----------*/  
@@ -160,17 +160,17 @@ function Healthkit(x, y, width, height, speed){
   
 /*-----------_new OBJECT-----------*/  
 //draw Player
-var __player = new Player(mouse.x, mouse.y, player_width, player_height);
+let __player = new Player(mouse.x, mouse.y, player_width, player_height);
 
 //draw n enemies into enemies array
 function drawEnemies(){
-  for (var _ = 0; _<4; _++){ //enemy with random x axis, -32 as y axis, enemy_width, enemy_height, random speed  
-    var x = Math.random()*(innerWidth-enemy_width);
-    var y = -enemy_height; //-height to draw above canvas for smooth income
-    var width = enemy_width;
-    var height = enemy_height;
-    var speed = Math.random()*4.5;
-    var __enemy = new Enemy(x, y, width, height, speed);
+  for (let _ = 0; _<4; _++){ //enemy with random x axis, -32 as y axis, enemy_width, enemy_height, random speed  
+    let x = Math.random()*(innerWidth-enemy_width);
+    let y = -enemy_height; //-height to draw above canvas for smooth income
+    let width = enemy_width;
+    let height = enemy_height;
+    let speed = Math.random()*4.5;
+    let __enemy = new Enemy(x, y, width, height, speed);
     _enemies.push(__enemy); //push enemy to my array of enemies
   }
 }setInterval(drawEnemies, 1234);
@@ -178,26 +178,26 @@ function drawEnemies(){
   
 //draw health kits
 function drawHealthkits(){
-  for (var _ = 0; _<1; _++){ //health with random x axis, -32 as y axis, healthkit_width, healthkit_height, random speed  
-    var x = Math.random()*(innerWidth-enemy_width);
-    var y = -enemy_height; //-height to draw above canvas for smooth income
-    var width = healthkit_width;
-    var height = healthkit_height;
-    var speed = Math.random()*2.6;
-    var __healthkit = new Healthkit(x, y, width, height, speed);
+  for (let _ = 0; _<1; _++){ //health with random x axis, -32 as y axis, healthkit_width, healthkit_height, random speed  
+    let x = Math.random()*(innerWidth-enemy_width);
+    let y = -enemy_height; //-height to draw above canvas for smooth income
+    let width = healthkit_width;
+    let height = healthkit_height;
+    let speed = Math.random()*2.6;
+    let __healthkit = new Healthkit(x, y, width, height, speed);
     _healthkits.push(__healthkit); //push healthkit to my array of healthkits
   }
 }setInterval(drawHealthkits, 15000);
 
 //draw bullet
-//var __bullet = new Bullet(mouse.x-bullet_width/2, mouse.y-player_height, bullet_width, bullet_height, bullet_speed);  
+//let __bullet = new Bullet(mouse.x-bullet_width/2, mouse.y-player_height, bullet_width, bullet_height, bullet_speed);  
   
 //fire bullet function
 function fire(){ //fire bullet from mouse.x on x axis, y axis, width, height, speed
-  for (var _ = 0; _<1; _++){
-    var x = mouse.x-bullet_width/2;
-    var y = mouse.y-player_height;
-    var __bullet = new Bullet(x, y, bullet_width, bullet_height, bullet_speed);
+  for (let _ = 0; _<1; _++){
+    let x = mouse.x-bullet_width/2;
+    let y = mouse.y-player_height;
+    let __bullet = new Bullet(x, y, bullet_width, bullet_height, bullet_speed);
     _bullets.push(__bullet); //push bullet to my array of bullets
     //shot.play();
   }
@@ -237,20 +237,20 @@ function animate(){
   //update _player
   __player.update();
   //update bullets from bullets array
-  for (var i=0; i < _bullets.length; i++){
+  for (let i=0; i < _bullets.length; i++){
     _bullets[parseInt(i)].update();
     if (_bullets[parseInt(i)].y < 0){
       _bullets.splice(i, 1);
     }
   }
   //update enemies from enemies array
-  for (var k=0; k < _enemies.length; k++){
+  for (let k=0; k < _enemies.length; k++){
     _enemies[parseInt(k)].update();
     //if enemy is below canvas, delete it
     if(_enemies[parseInt(k)].y > innerHeight){
       _enemies.splice(k, 1);
       health -= 10;
-    if(health == 0){
+    if(health === 0){
       alert("You DIED!\nYour score was "+score);
       startGame();
      }
@@ -258,9 +258,9 @@ function animate(){
   }
   
   //loop over both enemies and bullets to detect collisions
-  for(var j = _enemies.length-1; j >= 0; j--){
-    for(var l = _bullets.length-1; l >= 0; l--){
-      if(collision(_enemies[parseInt(j)], _bullets[l])){
+  for(let j = _enemies.length-1; j >= 0; j--){
+    for(let l = _bullets.length-1; l >= 0; l--){
+      if(collision(_enemies[parseInt(j)], _bullets[parseInt(l)])){
         _enemies.splice(j, 1);
         _bullets.splice(l, 1);
         score++;
@@ -269,12 +269,12 @@ function animate(){
   }
   
   //draw healthkits
-  for(var h=0; h < _healthkits.length; h++){
+  for(let h=0; h < _healthkits.length; h++){
     _healthkits[parseInt(h)].update();
   }
   //loop over both healthkits and bullets to detect collisions
-  for(var hh = _healthkits.length-1; hh >= 0; hh--){
-    for(var hhh = _bullets.length-1; hhh >= 0; hhh--){
+  for(let hh = _healthkits.length-1; hh >= 0; hh--){
+    for(let hhh = _bullets.length-1; hhh >= 0; hhh--){
       if(collision(_healthkits[parseInt(hh)], _bullets[parseInt(hhh)])){
         _healthkits.splice(hh, 1);
         _bullets.splice(hhh, 1);
