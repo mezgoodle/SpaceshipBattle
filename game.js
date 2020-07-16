@@ -9,36 +9,34 @@ c = c.getContext("2d");
 /*-----------MOUSE/TOUCH & CONTROLS-----------*/ 
 //mouse and touch objects
 function startGame(){
-mouse = {
+let mouse = {
   x: innerWidth/2,
   y: innerHeight-33
 };
   
-touch = {
+let touch = {
   x: innerWidth/2,
   y: innerHeight-33
 };
   
 //event listener for mouse object
-canvas.addEventListener("mousemove", function(event){
-mouse.x = event.clientX;
-//mouse.y = event.clientY;
+canvas.addEventListener("mousemove", (event) => {
+  let mouse.x = event.clientX;
 });
 //eventListener for touch object
-canvas.addEventListener("touchmove", function(event){
+canvas.addEventListener("touchmove", (event) => {
   let rect = canvas.getBoundingClientRect();
   let root = document.documentElement;
   let touch = event.changedTouches[0];
   let touchX = parseInt(touch.clientX);
   let touchY = parseInt(touch.clientY) - rect.top - root.scrollTop;
   event.preventDefault();
-  mouse.x = touchX;
-  //mouse.y = touchY;
+  let mouse.x = touchX;
 });
   
 /*-----------GAME VARIABLES-----------*/  
 //player
-let player_width = 32;
+let playerWidth = 32;
 let player_height = 32;
 let playerImg = new Image();
 let score = 0;
@@ -51,7 +49,7 @@ function choosePlayer(){
   if(userInput === 1){
     playerImg.src = orangeShip;
   }
-  else if(userInput == 2){
+  else if(userInput === 2){
     playerImg.src = blueShip;
   }
   else{
@@ -61,21 +59,21 @@ function choosePlayer(){
 
 //bullet array
 let _bullets = []; //array to hold n bullets
-let bullet_width = 6;
-let bullet_height = 8;
-let bullet_speed = 8;
+let bulletWidth = 6;
+let bulletHeight = 8;
+let bulletSpeed = 8;
 //enemy array
 let _enemies = []; //array to hold n enemies
 let enemyImg = new Image();
 enemyImg.src = "https://image.ibb.co/bX9UuU/ufo_1.png"; //"https://image.ibb.co/gi6ZpU/ufo.png";
-let enemy_width = 32;
-let enemy_height = 32;
+let enemyWidth = 32;
+let enemyHeight = 32;
 //health array
 let _healthkits = []; //array to hold n health kits
 let healthkitImg = new Image();
-healthkitImg.src = "https://image.ibb.co/iTrjuU/hospital.png";  //"https://image.ibb.co/gFvSEU/first_aid_kit.png";
-let healthkit_width = 32;
-let healthkit_height = 32;
+healthkitImg.src = "https://image.ibb.co/iTrjuU/hospital.png";
+let healthkitWidth = 32;
+let healthkitHeight = 32;
 //sounds
 let shot = new Audio();
 shot.src = "https://www.dropbox.com/s/w70c8hyryak6w40/Laser-SoundBible.com-602495617.mp3?dl=0";
@@ -88,12 +86,12 @@ function Player(x, y, width, height){
   this.width = width;
   this.height = height;
   
-  this.draw = function(){
+  this.draw = () => {
     c.beginPath();
-    c.drawImage(playerImg, mouse.x-player_width, mouse.y-player_height); //draw player and center cursor
+    c.drawImage(playerImg, mouse.x-playerWidth, mouse.y-player_height); //draw player and center cursor
   };
   
-  this.update = function(){
+  this.update = () => {
     this.draw();
   };
 }
@@ -106,7 +104,7 @@ function Bullet(x, y, width, height, speed){
   this.height = height;
   this.speed = speed;
   
-  this.draw = function(){
+  this.draw = () =>{
     c.beginPath();
     c.rect(this.x, this.y, this.width, this.height);
     c.fillStyle = "#fff";
@@ -114,7 +112,7 @@ function Bullet(x, y, width, height, speed){
     c.stroke();
   };
   
-  this.update = function(){
+  this.update = () => {
     this.y -= this.speed;
     this.draw();
   };
@@ -128,12 +126,12 @@ function Enemy(x, y, width, height, speed){
   this.height = height;
   this.speed = speed;
   
-  this.draw = function(){
+  this.draw = () => {
     c.beginPath();
     c.drawImage(enemyImg, this.x, this.y);
   };
   
-  this.update = function(){
+  this.update = () => {
     this.y += this.speed;
     this.draw();
   };
@@ -147,12 +145,12 @@ function Healthkit(x, y, width, height, speed){
   this.height = height;
   this.speed = speed;
   
-  this.draw = function(){
+  this.draw = () => {
     c.beginPath();
     c.drawImage(healthkitImg, this.x, this.y);
   };
   
-  this.update = function(){
+  this.update = () => {
     this.y += this.speed;
     this.draw();
   };
@@ -160,15 +158,15 @@ function Healthkit(x, y, width, height, speed){
   
 /*-----------_new OBJECT-----------*/  
 //draw Player
-let __player = new Player(mouse.x, mouse.y, player_width, player_height);
+let __player = new Player(mouse.x, mouse.y, playerWidth, player_height);
 
 //draw n enemies into enemies array
 function drawEnemies(){
   for (let _ = 0; _<4; _++){ //enemy with random x axis, -32 as y axis, enemy_width, enemy_height, random speed  
-    let x = Math.random()*(innerWidth-enemy_width);
-    let y = -enemy_height; //-height to draw above canvas for smooth income
-    let width = enemy_width;
-    let height = enemy_height;
+    let x = Math.random()*(innerWidth-enemyWidth);
+    let y = -enemyHeight; //-height to draw above canvas for smooth income
+    let width = enemyWidth;
+    let height = enemyHeight;
     let speed = Math.random()*4.5;
     let __enemy = new Enemy(x, y, width, height, speed);
     _enemies.push(__enemy); //push enemy to my array of enemies
@@ -178,35 +176,26 @@ function drawEnemies(){
   
 //draw health kits
 function drawHealthkits(){
-  for (let _ = 0; _<1; _++){ //health with random x axis, -32 as y axis, healthkit_width, healthkit_height, random speed  
-    let x = Math.random()*(innerWidth-enemy_width);
-    let y = -enemy_height; //-height to draw above canvas for smooth income
-    let width = healthkit_width;
-    let height = healthkit_height;
+  for (let _ = 0; _<1; _++){ //health with random x axis, -32 as y axis, healthkitWidth, healthkitHeight, random speed  
+    let x = Math.random()*(innerWidth-enemyWidth);
+    let y = -enemyHeight; //-height to draw above canvas for smooth income
+    let width = healthkitWidth;
+    let height = healthkitHeight;
     let speed = Math.random()*2.6;
     let __healthkit = new Healthkit(x, y, width, height, speed);
     _healthkits.push(__healthkit); //push healthkit to my array of healthkits
   }
 }setInterval(drawHealthkits, 15000);
-
-//draw bullet
-//let __bullet = new Bullet(mouse.x-bullet_width/2, mouse.y-player_height, bullet_width, bullet_height, bullet_speed);  
   
 //fire bullet function
 function fire(){ //fire bullet from mouse.x on x axis, y axis, width, height, speed
   for (let _ = 0; _<1; _++){
-    let x = mouse.x-bullet_width/2;
+    let x = mouse.x-bulletWidth/2;
     let y = mouse.y-player_height;
-    let __bullet = new Bullet(x, y, bullet_width, bullet_height, bullet_speed);
+    let __bullet = new Bullet(x, y, bulletWidth, bulletHeight, bulletSpeed);
     _bullets.push(__bullet); //push bullet to my array of bullets
-    //shot.play();
   }
 }setInterval(fire, 200);
-  
-//event listener for fire function
-canvas.addEventListener("click", function(){
-  //fire();
-});
   
 /*-----------COLLISION DETECTION-----------*/
 function collision(a,b){
